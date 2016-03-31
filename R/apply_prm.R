@@ -18,6 +18,8 @@ apply_prm <- function(dat,reg,CatchLags = 4, LifeHistoryVars = c('MaxLength','Ag
 
   dat$BvBmsy <- NA #housekeeping
 
+  if (is.numeric(dat$year) == F){dat$year == as.numeric(dat$year)}
+
   # Filter out things that don't have enough catch years
   not_enough_catch  <- dat %>%
     group_by(IdOrig) %>%
@@ -51,6 +53,8 @@ apply_prm <- function(dat,reg,CatchLags = 4, LifeHistoryVars = c('MaxLength','Ag
   predicted = predict.lm(reg,adjusted_data$Data, se.fit = T)
 
   formatted$LogBvBmsy = predicted$fit
+
+  formatted$regression_LogBvBmsy = predicted$fit
 
   formatted$BvBmsySD = predicted$se.fit
 
