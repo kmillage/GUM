@@ -6,7 +6,7 @@ Authors@R: c(person("Dan", "Ovando", email = "dovando@bren.ucsb.edu",
                   role = c("aut")))
 Description: This package takes at minimum catch data and scientific names and applied the paired panel regression model to CatchMSY approach used in Costello et al 2016
 Depends:
-    R (>= 3.2.4),
+    R (>= 3.2.1),
     dplyr,
     tidyr,
     zoo,
