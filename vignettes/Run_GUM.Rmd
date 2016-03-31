@@ -1,0 +1,48 @@
+---
+title: "Run_GUM"
+author: "Dan Ovando"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Run_GUM}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The GUM package runs the Global Upside Model presented in Costello et al. 2016. Once installed, you just need to pass it a data frame with at minimum variables `IdOrig` (id), `Year` (year), `Catch` (catch), and `SciName` (scientific name). The rest should take care of itself. 
+
+First, let's take a look at some sample data
+```{r example, warning=F, message=F}
+library(GUM)
+library(ggplot2)
+# devtools::load_all('GUM')
+head(sample_data)
+
+```
+
+There's about 100 stocks in there, so let's subset this down to something smaller, and with less data to test the package
+
+```{r test}
+
+
+
+stocks = unique(sample_data$IdOrig)
+
+sub = sample(stocks, 10, replace = F)
+
+small_dat = filter(sample_data, IdOrig %in% sub)
+
+less_dat = small_dat %>% dplyr::select(IdOrig,SciName,CommName,Year,Catch,BvBmsy) %>%
+  mutate(IdOrig = as.character(IdOrig))
+
+results = run_gum_assessment(dat = less_dat)
+
+
+```
+
+```{r plotthings}
+
+ggplot(results,aes(MSY)) + 
+  geom_histogram()
+
+```
