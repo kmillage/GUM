@@ -26,11 +26,10 @@ assign_life_history <- function(dat, FishBase = NA, LifeHistoryVars = c('MaxLeng
   # load('Data/fishbase_data.Rdata')
 
   # isscaap <- read.csv('Data/ISSCAAP Codes.csv', stringsAsFactors = F)
-
   life_bank <- out_dat %>%
-    select(IdOrig,SciName) %>%
-    left_join(fishbase_lifehistory, by = 'SciName' ) %>%
-      left_join(isscaap, by = 'SpeciesCat') %>%
+    select(IdOrig,SciName, SpeciesCat) %>%
+    left_join(select(fishbase_lifehistory, -SpeciesCat), by = 'SciName' ) %>%
+    left_join(isscaap, by = 'SpeciesCat') %>%
     mutate(b_to_k_ratio = 0.4)
 
   # lifenames <- c('MaxLength','AgeMat','VonBertK','Temp', 'SpeciesCat','SpeciesCatName')
@@ -43,7 +42,6 @@ assign_life_history <- function(dat, FishBase = NA, LifeHistoryVars = c('MaxLeng
   }
 
   out_dat <- filter(out_dat, is.na(SpeciesCatName) == F)
-
   return(out_dat)
 }
 
