@@ -21,7 +21,7 @@ apply_prm <- function(dat,reg,CatchLags = 4, LifeHistoryVars = c('MaxLength','Ag
   # Filter out things that don't have enough catch years
   not_enough_catch  <- dat %>%
     group_by(IdOrig) %>%
-    summarize(catch_years = sum(is.na(Catch) == F)) %>%
+    summarize(catch_years = sum(is.na(Catch) == F & Catch > 0)) %>%
     subset(catch_years < min_catch_years)
 
   dat <- dat %>%
