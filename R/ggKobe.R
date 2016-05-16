@@ -5,13 +5,14 @@
 #' @param dat dataframe containing required stuff
 #' @param xvar thing you want plotted on the x axis
 #' @param yvar thing you want plotted on the y axis
+#' @param plot_density logical indicating whether background density should be plotted
 #'
 #' @return a kobe plot ggplot
 #' @export
 #'
 #' @examples
 #' ggKobe(filter(ProjectionData, Year == 2012), xvar = 'BvBmsy', yvar = 'FvFmsy')
-ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy') {
+ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T) {
   dat <- ungroup(dat)
 
   orig_names = colnames(dat)
@@ -24,55 +25,60 @@ ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy') {
     rename_(xvar = xvar, yvar = yvar) %>%
     mutate(yvar = pmin(4, yvar))
 
+  if ('Dbase' %in% colnames(dat) == F){
+    dat$Dbase = 'Unknown'
+  }
+
+  if ('IdOrig' %in% colnames(dat)){
+
+    dat$id = dat$IdOrig
+
+  }
   dat$is_ram <- dat$Dbase == 'RAM'
 
-  dots <-
-    eval(parse(
-      text = paste(
-        'list(~median(',
-        xvar,
-        ', na.rm = T),~median(',
-        yvar,
-        ', na.rm = T))',
-        sep = ''
-      )
-    ))
   summary_dat <- dat %>%
     ungroup() %>%
     mutate(has_all = is.na(MSY) == F & is.na(xvar) == F & is.na(yvar) == F,
-  has_both_y = is.na(MSY) == F & is.na(yvar) == F) %>% 
-    filter(has_all == T) %>% 
+  has_both_y = is.na(MSY) == F & is.na(yvar) == F) %>%
+    filter(has_all == T) %>%
     summarise(median_x = median(xvar, na.rm = T),
               median_y = median(yvar, na.rm = T),
               geom_mean_msy_weight_x = exp(sum(MSY * log(xvar), na.rm = T) / sum(MSY, na.rm = T)),
               geom_mean_msy_weight_y = exp(sum(MSY * log(yvar + 1e-3), na.rm = T) / sum(MSY, na.rm = T))) %>%
     mutate(is_ram = NA, MSY = NA)
 
-
   kobe <- dat %>%
-    ggplot(aes(xvar, yvar)) + #general aesthetic
-    stat_density_2d(
-      aes(fill = ..density..),
-      geom = 'tile',
-      n = 100,
-      alpha = 0.8,
-      contour = F
-    ) + #eggplot
-    scale_fill_gradient2(
-      guide = F,
-      low = 'skyblue1',
-      mid = 'white',
-      high = 'khaki1',
-      midpoint = 0.5
-    ) + #set eggplot colors
-    geom_hline(aes(yintercept = 1), linetype = 'longdash') +
+    ggplot(aes(xvar, yvar)) #general aesthetic
+
+  if(plot_density ==T){
+
+    kobe = kobe +
+      stat_density_2d(
+        aes(fill = ..density..),
+        geom = 'tile',
+        n = 100,
+        alpha = 0.8,
+        contour = F
+      ) + #eggplot
+      scale_fill_gradient2(
+        guide = F,
+        low = 'skyblue1',
+        mid = 'white',
+        high = 'khaki1',
+        midpoint = 0.5
+      )
+  } #close geom_density if statement
+
+kobe = kobe +
+  geom_hline(aes(yintercept = 1), linetype = 'longdash') +
     geom_vline(aes(xintercept = 1), linetype = 'longdash') +
     geom_point(aes(
       xvar,
       yvar,
       color = is_ram,
       size = MSY,
-      alpha = (MSY)
+      alpha = (MSY),
+      key = id
     )) + #plot points
     scale_color_manual(guide = F, values = c('grey', 'red')) +
     geom_point(
