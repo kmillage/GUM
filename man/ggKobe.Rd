@@ -4,7 +4,7 @@
 \alias{ggKobe}
 \title{ggKobe}
 \usage{
-ggKobe(dat, xvar = "BvBmsy", yvar = "FvFmsy")
+ggKobe(dat, xvar = "BvBmsy", yvar = "FvFmsy", plot_density = T)
 }
 \arguments{
 \item{dat}{dataframe containing required stuff}
@@ -12,6 +12,8 @@ ggKobe(dat, xvar = "BvBmsy", yvar = "FvFmsy")
 \item{xvar}{thing you want plotted on the x axis}
 
 \item{yvar}{thing you want plotted on the y axis}
+
+\item{plot_density}{logical indicating whether background density should be plotted}
 }
 \value{
 a kobe plot ggplot
