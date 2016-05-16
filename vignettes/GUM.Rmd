@@ -63,9 +63,6 @@ ggplot(results,aes(MSY)) +
 ggplot(results_no_sciname,aes(MSY)) + 
   geom_histogram()
 
-a = ggKobe(dat = results, plot_density = F)
-
-ggplotly(a) 
-
+a = ggKobe(dat = results)
 
 ```
