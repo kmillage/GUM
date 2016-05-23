@@ -10,6 +10,7 @@
 #' @param n number of iterations to try
 #' @param NumCPUs number of CPUs to use for parallel processing
 #' @return output of CatchMSY
+#' @export
 
 run_post_prm_pt_cmsy <-
   function(dat,
