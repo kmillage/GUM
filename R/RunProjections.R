@@ -41,6 +41,8 @@ RunProjection <- function(Data,
                           ProjectionTime = 30)
 {
 
+  Data = filter(Data, is.na(FvFmsy) == F & is.na(BvBmsy) == F)
+
   Data$BtoKRatio = Data$b_to_k_ratio
 
   Data$Year = Data$year
