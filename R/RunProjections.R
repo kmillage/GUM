@@ -21,7 +21,7 @@
 RunProjection <- function(Data,
                           BaselineYear,
                           NumCPUs,
-                          StatusQuoPolicy,
+                          StatusQuoPolicy = 'StatusQuoA',
                           Policies = c(
                             'StatusQuoOpenAccess',
                             'Opt',

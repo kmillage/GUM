@@ -1,7 +1,7 @@
 # source('RunProjections.R')
 # source('SnowProjections.R')
 
-# devtools::install_github('DanOvando/GUM', build_vignettes = T)
+devtools::install_github('DanOvando/GUM', build_vignettes = T)
 library(GUM)
 
 # devtools::load_all('../GUM')
@@ -35,11 +35,11 @@ results$Price <- 1000
 
 results$BvBmsyOpenAccess <- 0.5
 
-test_projection <- RunProjection(Data = as.data.frame(results),
+test_projection <- as.data.frame(results) %>%
+  # filter(is.na(FvFmsy) == F) %>%
+  RunProjection(
               BaselineYear = 2012,
-              NumCPUs = 1,
-              StatusQuoPolicy = StatusQuoPolicy
-              )
+              NumCPUs = 1)
 
 ggplot(test_projection$DataPlus, aes(Year, BvBmsy, fill = Policy)) +
   geom_point(shape = 21) +
