@@ -1,7 +1,7 @@
 # source('RunProjections.R')
 # source('SnowProjections.R')
 
-devtools::install_github('DanOvando/GUM', build_vignettes = T)
+# devtools::install_github('DanOvando/GUM', build_vignettes = T)
 library(GUM)
 
 # devtools::load_all('../GUM')
@@ -9,7 +9,7 @@ library(ggplot2)
 
 head(sample_data)
 
-vignette('Run_GUM')
+vignette('GUM')
 
 stocks = unique(sample_data$IdOrig)
 

@@ -94,7 +94,7 @@ kobe = kobe +
       size = 4
     ) +
     scale_size_continuous(guide = F) + #turn off legends
-    scale_alpha_continuous(guide = F, range = c(0.5, 0.9)) +
+    scale_alpha_continuous(guide = F, range = c(0.9, 1)) +
     xlab(xvar_name) +
     ylab(yvar_name) +
     theme_classic() +
