@@ -36,6 +36,13 @@ stocks <- unique(data$IdOrig)
 # data <- filter(data, IdOrig %in% sub)
 #
 # stocks <- unique(data$IdOrig)
+#
+
+if ('IdOrig' %in% colnames(data)){
+
+  data$id = data$IdOrig
+
+}
 
 apply_fun <- function(i,data,stocks){
   out = run_post_prm_pt_cmsy(dat = filter(data, IdOrig == stocks[i]))$CatchMSY

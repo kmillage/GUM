@@ -402,7 +402,6 @@ run_post_prm_pt_cmsy <-
 
         PossibleRuns$id <- unique(dat$id)
 
-
         ## Get statistics on g, k and msy
         g   <- PossibleRuns$g
         k 	<- PossibleRuns$K

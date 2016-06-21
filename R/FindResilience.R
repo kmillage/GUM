@@ -13,6 +13,10 @@ FindResilience<-function(Data)
   ResData$tm<-NA
   ResData$Res<-NA
 
+  Data$Res = NA
+
+  Data$Value = NA
+
   ResData<-ResData[is.na(ResData$VonBertK)==F | is.na(ResData$AgeMat)==F,]
 
   # Assign resilience based on life history values
