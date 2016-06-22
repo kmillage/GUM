@@ -1,5 +1,5 @@
 ---
-title: "Run_GUM"
+title: "GUM"
 author: "Dan Ovando"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -66,5 +66,7 @@ ggplot(results,aes(MSY)) +
 
 ggplot(results_no_sciname,aes(MSY)) + 
   geom_histogram()
+
+a = ggKobe(dat = results)
 
 ```
