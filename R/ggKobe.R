@@ -12,7 +12,8 @@
 #'
 #' @examples
 #' ggKobe(filter(ProjectionData, Year == 2012), xvar = 'BvBmsy', yvar = 'FvFmsy')
-ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T) {
+ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T,
+                   color_name = 'RAM') {
   dat <- ungroup(dat)
 
   orig_names = colnames(dat)
@@ -34,7 +35,7 @@ ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T) {
     dat$id = dat$IdOrig
 
   }
-  dat$is_ram <- dat$Dbase == 'RAM'
+  dat$is_ram <- dat$Dbase == color_name
 
   summary_dat <- dat %>%
     ungroup() %>%
