@@ -9,7 +9,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The GUM package runs the Global Upside Model presented in Costello et al. 2016. Once installed, you just need to pass it a data frame with at minimum variables `IdOrig` (id), `Year` (year), `Catch` (catch), and `SpeciesCat`, the numeric ISSCAAP species category. `SciName` (scientific name) helps as well. The rest should take care of itself. Additional parameters that can be supplied to the data frame as available are: 
+The GUM package runs the Global Upside Model presented in Costello et al. 2016. Once installed, you just need to pass it a data frame with at minimum variables `IdOrig` (id), `Year` (year), `Catch` (catch), and `SpeciesCat`, the numeric ISSCAAP species category. `SciName` (scientific name) helps as well. The rest should take care of itself.
+
+**Important:** You must pass a data frame and **NOT** a data table as used with *dplyr* for the analysis to work. If you converted your data to a data table while preparing it be sure to convert it back to a true data frame using `data.frame()`
+
+Additional parameters that can be supplied to the data frame as available are: 
 
 Variable  | Description
 ----------|------------
