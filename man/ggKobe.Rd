@@ -4,7 +4,8 @@
 \alias{ggKobe}
 \title{ggKobe}
 \usage{
-ggKobe(dat, xvar = "BvBmsy", yvar = "FvFmsy", plot_density = T)
+ggKobe(dat, xvar = "BvBmsy", yvar = "FvFmsy", plot_density = T,
+  color_name = "RAM", plot_panel_colors = F)
 }
 \arguments{
 \item{dat}{dataframe containing required stuff}
@@ -14,13 +15,17 @@ ggKobe(dat, xvar = "BvBmsy", yvar = "FvFmsy", plot_density = T)
 \item{yvar}{thing you want plotted on the y axis}
 
 \item{plot_density}{logical indicating whether background density should be plotted}
+
+\item{color_name}{variable to color code dots by}
+
+\item{plot_panel_colors}{T or F to plot background panel colors instead of density}
 }
 \value{
 a kobe plot ggplot
 }
 \description{
 \code{ggKobe} produces a kobe plot in the manner of Costello
-et al 2016, using data frmo
+et al 2016, using user supplied data
 }
 \examples{
 ggKobe(filter(ProjectionData, Year == 2012), xvar = 'BvBmsy', yvar = 'FvFmsy')

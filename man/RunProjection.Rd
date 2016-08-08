@@ -4,7 +4,7 @@
 \alias{RunProjection}
 \title{RunProjections}
 \usage{
-RunProjection(Data, BaselineYear, NumCPUs, StatusQuoPolicy,
+RunProjection(Data, BaselineYear, NumCPUs, StatusQuoPolicy = "StatusQuoA",
   Policies = c("StatusQuoOpenAccess", "Opt", "CatchShare",
   "StatusQuoFForever", "StatusQuoBForever", "Fmsy", "CloseDown"),
   Discount = 0, CatchShareCost = 0.77, CatchSharePrice = 1.31,
