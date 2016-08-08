@@ -1,19 +1,21 @@
 #' ggKobe
 #'
 #' \code{ggKobe} produces a kobe plot in the manner of Costello
-#' et al 2016, using data frmo
+#' et al 2016, using user supplied data
 #' @param dat dataframe containing required stuff
 #' @param xvar thing you want plotted on the x axis
 #' @param yvar thing you want plotted on the y axis
 #' @param plot_density logical indicating whether background density should be plotted
-#'
+#' @param color_name variable to color code dots by
+#' @param plot_panel_colors T or F to plot background panel colors instead of density
 #' @return a kobe plot ggplot
 #' @export
 #'
 #' @examples
 #' ggKobe(filter(ProjectionData, Year == 2012), xvar = 'BvBmsy', yvar = 'FvFmsy')
 ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T,
-                   color_name = 'RAM') {
+                   color_name = 'RAM',
+                   plot_panel_colors = F) {
   dat <- ungroup(dat)
 
   orig_names = colnames(dat)
@@ -50,8 +52,8 @@ ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T,
 
   kobe <- dat %>%
     ggplot(aes(xvar, yvar)) #general aesthetic
-
-  if(plot_density ==T){
+  
+  if(plot_density == T & plot_panel_colors == F){
 
     kobe = kobe +
       stat_density_2d(
@@ -70,6 +72,32 @@ ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T,
       )
   } #close geom_density if statement
 
+  if (plot_panel_colors == T){
+    
+    rect_dat = data.frame(panel = c('bottom_left','top_right','bottom_right',
+                                    'top_left'),
+                          x_min = c(-Inf,1,1,-Inf),x_max = c(1,Inf,Inf,1),
+                          y_min = c(-Inf,1,-Inf,1), y_max = c(1,Inf,1,Inf))
+    
+    kobe <- kobe + 
+      geom_rect(
+        data = rect_dat,
+        aes(
+          xmin = x_min,
+          ymin = y_min,
+          xmax = x_max,
+          ymax = y_max,
+          fill = panel
+        ),
+        inherit.aes = F,
+        alpha = 0.2
+      ) + 
+      scale_fill_manual(values = c('yellow','green','red','yellow'),
+                        guide = F) #+ 
+      # geom_density_2d()
+    
+  }
+  
 kobe = kobe +
   geom_hline(aes(yintercept = 1), linetype = 'longdash') +
     geom_vline(aes(xintercept = 1), linetype = 'longdash') +
@@ -81,18 +109,23 @@ kobe = kobe +
       alpha = (MSY),
       key = id
     )) + #plot points
-    scale_color_manual(guide = F, values = c('grey', 'red')) +
+    scale_color_manual(guide = F, values = c('#383737', 'red')) +
     geom_point(
       data = summary_dat,
       aes(median_x, median_y),
-      shape = 17,
-      size = 4
+      shape = 24,
+      size = 6,
+      fill = 'steelblue2',
+      alpha = 0.75
+      
     ) +
     geom_point(
       data = summary_dat,
       aes(geom_mean_msy_weight_x, geom_mean_msy_weight_y),
-      shape = 15,
-      size = 4
+      shape = 22,
+      size = 6,
+      fill = 'steelblue2',
+      alpha = 0.75
     ) +
     scale_size_continuous(guide = F) + #turn off legends
     scale_alpha_continuous(guide = F, range = c(0.9, 1)) +
@@ -119,6 +152,8 @@ kobe = kobe +
       )
     ) +
     coord_cartesian(xlim = c(0, 2.5), ylim = c(0, 4)) #Trim the boundaries
+
+
 
   return(kobe)
 }
