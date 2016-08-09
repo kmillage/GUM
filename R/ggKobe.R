@@ -52,7 +52,7 @@ ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T,
 
   kobe <- dat %>%
     ggplot(aes(xvar, yvar)) #general aesthetic
-  
+
   if(plot_density == T & plot_panel_colors == F){
 
     kobe = kobe +
@@ -73,13 +73,13 @@ ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T,
   } #close geom_density if statement
 
   if (plot_panel_colors == T){
-    
+
     rect_dat = data.frame(panel = c('bottom_left','top_right','bottom_right',
                                     'top_left'),
                           x_min = c(-Inf,1,1,-Inf),x_max = c(1,Inf,Inf,1),
                           y_min = c(-Inf,1,-Inf,1), y_max = c(1,Inf,1,Inf))
-    
-    kobe <- kobe + 
+
+    kobe <- kobe +
       geom_rect(
         data = rect_dat,
         aes(
@@ -90,14 +90,18 @@ ggKobe <- function(dat, xvar = 'BvBmsy', yvar = 'FvFmsy', plot_density = T,
           fill = panel
         ),
         inherit.aes = F,
-        alpha = 0.2
-      ) + 
-      scale_fill_manual(values = c('yellow','green','red','yellow'),
-                        guide = F) #+ 
-      # geom_density_2d()
-    
-  }
-  
+        alpha = 0.5
+      ) +
+      scale_fill_manual(values =   c("lightgoldenrod1", "limegreen", "#FF4500","lightgoldenrod1"),
+                        guide = F) #+
+
+# c("lightgoldenrod1")
+    # geom_density_2d()c("limegreen")
+# c("#FFF68F", "#FFFFFF")
+  } #close panel color if
+
+    # c('yellow','green','tomato','yellow')
+
 kobe = kobe +
   geom_hline(aes(yintercept = 1), linetype = 'longdash') +
     geom_vline(aes(xintercept = 1), linetype = 'longdash') +
@@ -117,7 +121,7 @@ kobe = kobe +
       size = 6,
       fill = 'steelblue2',
       alpha = 0.75
-      
+
     ) +
     geom_point(
       data = summary_dat,
