@@ -38,7 +38,8 @@ RunProjection <- function(Data,
                           bvec =  seq(0.00000001, 2.5, length.out = 30),
                           tol = 0.1,
                           beta = 1.3,
-                          ProjectionTime = 30)
+                          ProjectionTime = 30,
+                          default_catch_share = 0)
 {
 
   Data = filter(Data, is.na(FvFmsy) == F & is.na(BvBmsy) == F)
@@ -66,6 +67,12 @@ RunProjection <- function(Data,
     unique(Data[Data$Year == BaselineYear, IdVar])
 
   Data <- Data[Data$Year <= BaselineYear,]
+
+  if (class(Data$CatchShare) == 'NULL'){
+
+    Data$CatchShare <- default_catch_share
+
+  }
 
   TempStockMatrix <-
     as.data.frame(matrix(NA, nrow = 0, ncol = dim(Data)[2] + 2))
