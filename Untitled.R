@@ -3,9 +3,9 @@
 
 # devtools::install_github('DanOvando/GUM', build_vignettes = T)
 library(GUM)
+library(tidyverse)
 
 # devtools::load_all('../GUM')
-library(ggplot2)
 
 head(sample_data)
 
@@ -40,6 +40,8 @@ test_projection <- as.data.frame(results) %>%
   RunProjection(
               BaselineYear = 2012,
               NumCPUs = 1)
+
+a = ggKobe(test_projection$DataPlus %>% filter(Year == 2012, Policy == 'Historic'), plot_density = T)
 
 ggplot(test_projection$DataPlus, aes(Year, BvBmsy, fill = Policy)) +
   geom_point(shape = 21) +
