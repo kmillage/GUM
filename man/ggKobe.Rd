@@ -5,7 +5,7 @@
 \title{ggKobe}
 \usage{
 ggKobe(dat, xvar = "BvBmsy", yvar = "FvFmsy", plot_density = T,
-  color_name = "RAM", plot_panel_colors = F)
+  color_name = "RAM", plot_panel_colors = F, xlimit = 2.5, ylimit = 4)
 }
 \arguments{
 \item{dat}{dataframe containing required stuff}

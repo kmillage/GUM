@@ -19,7 +19,9 @@ ggKobe <-
            yvar = 'FvFmsy',
            plot_density = T,
            color_name = 'RAM',
-           plot_panel_colors = F) {
+           plot_panel_colors = F,
+           xlimit = 2.5,
+           ylimit = 4) {
     dat <- ungroup(dat)
 
     orig_names = colnames(dat)
@@ -30,7 +32,8 @@ ggKobe <-
 
     dat = dat %>%
       rename_(xvar = xvar, yvar = yvar) %>%
-      mutate(yvar = pmin(4, yvar))
+      mutate(yvar = pmin(ylimit, yvar),
+             xvar = pmin(xlimit,xvar))
 
     if ('Dbase' %in% colnames(dat) == F) {
       dat$Dbase = 'Unknown'

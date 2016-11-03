@@ -9,7 +9,7 @@ RunProjection(Data, BaselineYear, NumCPUs, StatusQuoPolicy = "StatusQuoA",
   "StatusQuoFForever", "StatusQuoBForever", "Fmsy", "CloseDown"),
   Discount = 0, CatchShareCost = 0.77, CatchSharePrice = 1.31,
   IdVar = "IdOrig", bvec = seq(1e-08, 2.5, length.out = 30), tol = 0.1,
-  beta = 1.3, ProjectionTime = 30)
+  beta = 1.3, ProjectionTime = 30, default_catch_share = 0)
 }
 \arguments{
 \item{ProjectionTime}{}

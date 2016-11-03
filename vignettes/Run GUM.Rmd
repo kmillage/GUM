@@ -1,4 +1,15 @@
 ---
+title: "Run GUM"
+author: "Dan Ovando"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Run GUM}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+---
 title: "GUM"
 author: "Dan Ovando"
 date: "`r Sys.Date()`"
@@ -29,7 +40,7 @@ Even if you only have these for selected stocks, the model will try and fill in 
 First, let's take a look at some sample data
 ```{r example, warning=F, message=F}
 library(GUM)
-library(ggplot2)
+library(tidyverse)
 # devtools::load_all('GUM')
 head(sample_data)
 
@@ -68,5 +79,5 @@ ggplot(results_no_sciname,aes(MSY)) +
   geom_histogram()
 
 a = ggKobe(dat = results)
-
+a
 ```
