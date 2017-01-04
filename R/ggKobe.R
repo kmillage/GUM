@@ -129,9 +129,7 @@ ggKobe <-
         yvar,
         color = is_ram,
         size = MSY,
-        alpha = (MSY),
-        key = id
-      )) + #plot points
+        alpha = (MSY))) + #plot points
       scale_color_manual(guide = F, values = c('#383737', 'red')) +
       geom_point(
         data = summary_dat,
