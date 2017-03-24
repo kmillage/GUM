@@ -10,20 +10,21 @@
 
 assign_spcategory<-function(dat, afsismatch = afsis)
 {
+  browser()
   # rename columns to match input data
   colnames(afsismatch)<-c('SciName', 'SpeciesCat')
-  
+
   # pull out data with SpeciesCat
   hasdata<- dat %>%
     filter(is.na(SpeciesCat)==F)
-  
+
   # subset dat to include data missing SpeciesCat
   temp<- dat %>%
     filter(is.na(SpeciesCat)) %>%
     dplyr::select(-SpeciesCat) %>% # drop SpeciesCat variable so as not to duplicate it with join
     left_join(afsismatch, by = c('SciName'))
-  
+
   temp<-data.frame(rbind(hasdata,temp))
-  
+  browser()
   return(temp)
 }

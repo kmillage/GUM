@@ -38,6 +38,7 @@ AssignNearestSpeciesCategory<- function(Data,AvailableCategories,AllCategories)
         SpeciesCat<- Data$SpeciesCat[Where][1]
 
         GroupDistance<- (abs(PossibleCats$SpeciesCat-SpeciesCat)) # Find the closest match within the group
+
         ClosestGroupNumber<- PossibleCats$SpeciesCat[GroupDistance==min(GroupDistance)[1]][1]
 
         ClosestGroup<- PossibleCats$SpeciesCatName[PossibleCats$SpeciesCat==ClosestGroupNumber]

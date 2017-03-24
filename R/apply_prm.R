@@ -17,7 +17,6 @@ apply_prm <- function(dat,reg,CatchLags = 4, LifeHistoryVars = c('MaxLength','Ag
                       min_catch_years = 10){
 
   dat$BvBmsy <- NA #housekeeping
-
   if (is.numeric(dat$year) == F){dat$year == as.numeric(dat$year)}
 
   # Filter out things that don't have enough catch years
@@ -43,9 +42,11 @@ apply_prm <- function(dat,reg,CatchLags = 4, LifeHistoryVars = c('MaxLength','Ag
   # Change species category factors to match model
   reg_factors <- reg$xlevels$SpeciesCatName
 
-  AllPossible = formatted %>%
-    select(SpeciesCatName, SpeciesCat) %>%
-    unique()
+AllPossible <-  isscaap_codes
+
+  # AllPossible = formatted %>%
+  #   select(SpeciesCatName, SpeciesCat) %>%
+  #   unique()
 
   adjusted_data = AssignNearestSpeciesCategory(Data = formatted, AvailableCategories = reg_factors, AllCategories = AllPossible)
 

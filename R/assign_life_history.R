@@ -21,7 +21,6 @@ assign_life_history <-
              'b_to_k_ratio'
            )) {
     # Add in life history variables if missing --------------------------------
-
     missing <-
       LifeHistoryVars[!LifeHistoryVars %in% colnames(dat)] # find life history data needed but not present
 
