@@ -38,11 +38,11 @@ apply_prm <- function(dat,reg,CatchLags = 4, LifeHistoryVars = c('MaxLength','Ag
 
   # Add in life history
   formatted <- assign_life_history(dat = formatted,LifeHistoryVars = LifeHistoryVars)
-
+# browser()
   # Change species category factors to match model
   reg_factors <- reg$xlevels$SpeciesCatName
-
-AllPossible <-  isscaap_codes
+if(is.null(reg_factors)) browser()
+  AllPossible <-  isscaap_codes
 
   # AllPossible = formatted %>%
   #   select(SpeciesCatName, SpeciesCat) %>%

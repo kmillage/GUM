@@ -13,7 +13,9 @@
 #' @export
 
 run_post_prm_pt_cmsy <-
-  function(dat,
+  function(s,
+           dat,
+           stocks,
            b_to_k_ratio = 0.4,
            res = 'Medium',
            start_bio = NA,
@@ -142,6 +144,25 @@ run_post_prm_pt_cmsy <-
 
     }
 
+
+# Main function body ------------------------------------------------------
+
+    if(NumCPUs > 1) {
+    write.table(
+      paste(round(100 * (s / length(
+        stocks
+      )), 2), '% Done with Projections', sep = ''),
+      file = 'Projection Analysis Progress.txt',
+      append = TRUE,
+      sep = ";",
+      dec = ".",
+      row.names = FALSE,
+      col.names = FALSE
+    )
+
+    dat <- filter(dat, IdOrig == stocks[s])
+
+    }
 
     if (all(is.na(dat$b_to_k_ratio))) {
       dat$b_to_k_ratio <- b_to_k_ratio

@@ -75,9 +75,10 @@ ggKobe <- function (dat, xvar = "BvBmsy",
   kobe = kobe +
     geom_hline(aes(yintercept = 1), linetype = "longdash") +
     geom_vline(aes(xintercept = 1), linetype = "longdash") +
-    geom_point(aes(xvar, yvar, color = is_ram, size = MSY,
-                   alpha = (MSY))) + scale_color_manual(guide = F,
-                                                                  values = c("#383737", "red"))
+    # geom_point(aes(xvar, yvar, color = is_ram, size = MSY,
+    #                alpha = (MSY))) +
+    geom_point(aes_string(color = color_name, size = 'MSY')) +
+    scale_color_manual(guide = FALSE, values = c("#383737", "red"))
   if(summary_points == TRUE){
     kobe = kobe +
       geom_point(data = summary_dat, aes(median_x, median_y), shape = 24, size = 6, fill = "steelblue2", alpha = 0.75) +

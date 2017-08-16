@@ -5,7 +5,7 @@
 #'
 #' @return results a data frame with assessment results
 #' @export
-run_gum_assessment <- function(dat){
+run_gum_assessment <- function(dat, useParallel = FALSE, numCPUs = 1){
 
 
 
@@ -62,12 +62,78 @@ if ('IdOrig' %in% colnames(data)){
 
 }
 
+## Section: Run Catch-MSY (with option for parallel)
+####################################################
+
+### Non parallel
+if(useParallel == FALSE) {
+
 apply_fun <- function(i,data,stocks){
   out = run_post_prm_pt_cmsy(dat = filter(data, IdOrig == stocks[i]))$CatchMSY
 }
 
 results <- lapply(1:length(stocks), apply_fun, data = data, stocks = stocks) %>%
   bind_rows()
+}
+
+### Parallel
+if(useParallel == TRUE) {
+
+    if (Sys.info()[1] != 'Windows')
+    {
+      results <-
+        (
+          mclapply(
+            1:length(stocks),
+            run_post_prm_pt_cmsy,
+            dat = data,
+            stocks = stocks,
+            b_to_k_ratio = 0.4,
+            res = 'Medium',
+            start_bio = NA,
+            mid_bio = NA,
+            final_bio = NA,
+            CommonError = 0.05,
+            sigR = 0,
+            Smooth = F,
+            Display = F,
+            n = 10000,
+            NumCPUs = numCPUs
+          )
+        )
+    }
+
+  if (Sys.info()[1] == 'Windows')
+    {
+      sfInit(parallel = TRUE, cpus = NumCPUs)
+
+      sfExportAll()
+
+      sfLibrary(dplyr)
+
+      results <-
+        (
+          sfClusterApplyLB(
+            1:length(stocks),
+            dat = data,
+            stocks,
+            b_to_k_ratio = 0.4,
+            res = 'Medium',
+            start_bio = NA,
+            mid_bio = NA,
+            final_bio = NA,
+            CommonError = 0.05,
+            sigR = 0,
+            Smooth = F,
+            Display = F,
+            n = 10000,
+            NumCPUs = numCPUs
+          )
+        )
+
+      sfStop()
+    }
+  }
 
 return(results)
 

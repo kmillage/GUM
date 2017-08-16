@@ -48,12 +48,15 @@ AssignNearestSpeciesCategory<- function(Data,AvailableCategories,AllCategories)
       } #Close if
       else
       {
+        # browser()
 
         GroupDistance<- ((abs(Possible-Group)))
 
         ClosestCategories<- PossibleCats[GroupDistance==min(GroupDistance)[1],]
 
         ClosestGroup<- ClosestCategories[ClosestCategories$SpeciesCat==max(ClosestCategories$SpeciesCat),]
+
+        if(length(ClosestGroup$SpeciesCatName)==0) browser()
 
         Data$SpeciesCatName[Where]<- ClosestGroup$SpeciesCatName
 
