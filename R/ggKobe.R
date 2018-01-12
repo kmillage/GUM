@@ -17,7 +17,7 @@
 ggKobe <- function (dat, xvar = "BvBmsy",
                     yvar = "FvFmsy",
                     plot_density = T,
-                    color_name = "RAM",
+                    color_name = "Dbase",
                     plot_panel_colors = F,
                     summary_points = T,
                     xlimit = 2.5,

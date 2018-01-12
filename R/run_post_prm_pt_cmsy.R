@@ -507,6 +507,10 @@ run_post_prm_pt_cmsy <-
 
         dat$FvFmsy <- (dat$catch / dat$MSY) / dat$BvBmsy
 
+        dat$Bmsy <- dat$k / (dat$phi + 1) ^ (1 / dat$phi)
+
+        dat$biomass <- dat$Bmsy * dat$BvBmsy
+
         ## plot MSY over catch data
         if (Display == T & NumCPUs == 1 & length(g) > 10)
         {
