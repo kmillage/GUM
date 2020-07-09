@@ -1,7 +1,7 @@
 # source('RunProjections.R')
 # source('SnowProjections.R')
 
-# devtools::install_github('DanOvando/GUM', build_vignettes = T)
+devtools::install_github('DanOvando/GUM', build_vignettes = T)
 library(GUM)
 library(tidyverse)
 

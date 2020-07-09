@@ -50,13 +50,11 @@ There's about 100 stocks in there, so let's subset this down to something smalle
 
 ```{r test}
 
-
-
 stocks = unique(sample_data$IdOrig)
 
 sub = sample(stocks, 10, replace = F)
 
-small_dat = filter(sample_data, IdOrig %in% sub)
+small_dat = dplyr::filter(sample_data, IdOrig %in% sub)
 
 less_dat = small_dat %>% dplyr::select(IdOrig,SciName,SpeciesCat,CommName,Year,Catch,BvBmsy) %>%
   mutate(IdOrig = as.character(IdOrig))
