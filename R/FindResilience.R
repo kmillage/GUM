@@ -9,36 +9,37 @@ FindResilience<-function(Data)
 {
   ResData<-unique(Data[c("IdOrig","SciName", "VonBertK","AgeMat")])
   #ResNames<-validate_names(ResData$SciName)
-  
+
   RESout<-stocks(ResData$SciName, fields="Resilience")
+
   RESout<-RESout%>%
-    drop_na(Resilience)%>% 
+    drop_na(Resilience)%>%
     rename(SciName = sciname, Res = Resilience)
-    
+
   ResData<-merge(ResData, RESout, all.x=T, all.y=F)
-    
+
 
   # ResData$k<-NA
   # ResData$tm<-NA
   # ResData$Res<-NA
-  # 
+  #
   Data$Res = NA
-  # 
+  #
   Data$Value = NA
-  # 
+  #
   # ResData<-ResData[is.na(ResData$VonBertK)==F | is.na(ResData$AgeMat)==F,]
-  # 
+  #
   # # Assign resilience based on life history values
   # ResData$k[ResData$VonBertK>0.3]<-"High"
   # ResData$k[ResData$VonBertK>=0.16 & ResData$VonBertK<=0.3]<-"Medium"
   # ResData$k[ResData$VonBertK>=0.05 & ResData$VonBertK<0.16]<-"Low"
   # ResData$k[ResData$VonBertK<0.05]<-"Very Low"
-  # 
+  #
   # ResData$tm[ResData$AgeMat<1]<-"High"
   # ResData$tm[ResData$AgeMat>=1 & ResData$AgeMat<=4]<-"Medium"
   # ResData$tm[ResData$AgeMat>4 & ResData$AgeMat<=10]<-"Low"
   # ResData$tm[ResData$AgeMat>10]<-"Very Low"
-  # 
+  #
   # ResData$Res[grepl("Very Low", ResData$k) | grepl("Very Low", ResData$tm)]<-"Very low"
   # ResData$Res[(grepl("Low", ResData$k) | grepl("Low", ResData$tm)) & is.na(ResData$Res)==T]<-"Low"
   # ResData$Res[(grepl("Medium", ResData$k) | grepl("Medium", ResData$tm)) & is.na(ResData$Res)==T]<-"Medium"
